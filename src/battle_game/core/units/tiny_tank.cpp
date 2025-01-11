@@ -83,7 +83,6 @@ void Tank::Update() {
   TankMove(3.0f, glm::radians(180.0f));
   TurretRotate();
   Fire();
-  Recover();
 }
 
 void Tank::TankMove(float move_speed, float rotate_angular_speed) {
@@ -156,12 +155,7 @@ bool Tank::IsHit(glm::vec2 position) const {
          position.y < 1.0f && position.x + position.y < 1.6f &&
          position.y - position.x < 1.6f;
 }
-void Tank::Recover() {
-  update_count_++;
-  if (update_count_ % 30 == 0) {
-    SetHealth(GetHealth() + 0.01f);
-  }
-}
+
 const char *Tank::UnitName() const {
   return "Tiny Tank";
 }
