@@ -19,13 +19,13 @@ Grain::Grain(GameCore *game_core, uint32_t id, uint32_t player_id)
       /* Tank Body */
       tank_body_model_index = mgr->RegisterModel(
           {
-              {{-0.8f*0.5, 0.8f*0.5}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
-              {{-0.8f*0.5, -1.0f*0.5}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
-              {{0.8f*0.5, 0.8f*0.5}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
-              {{0.8f*0.5, -1.0f*0.5}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
+              {{-0.8f*0.8, 0.8f*0.8}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
+              {{-0.8f*0.8, -1.0f*0.8}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
+              {{0.8f*0.8, 0.8f*0.8}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
+              {{0.8f*0.8, -1.0f*0.8}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
               // distinguish front and back
-              {{0.6f*0.5, 1.0f*0.5}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
-              {{-0.6f*0.5, 1.0f*0.5}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
+              {{0.6f*0.8, 1.0f*0.8}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
+              {{-0.6f*0.8, 1.0f*0.8}, {0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}},
           },
           {0, 1, 2, 1, 2, 3, 0, 2, 5, 2, 4, 5});
     }
@@ -161,7 +161,8 @@ void Grain::Fire() {
 
 
 void Grain::Fix() {
-    if (BasicMaxHealth() - GetHealth() < 1.0f) {
+   if (BasicMaxHealth() - GetHealth() < 1.0f &&
+       game_core_->RandomFloat() < 0.3f) {
         SetHealth(GetHealth() * 1.1f);
     }
 }
@@ -171,9 +172,9 @@ float Grain::GetSpeedScale() const {
 }
 bool Grain::IsHit(glm::vec2 position) const {
   position = WorldToLocal(position);
-  return position.x > -0.8f*0.5 && position.x < 0.8f*0.5 && position.y > -1.0f*0.5 &&
-         position.y < 1.0f*0.5 && position.x + position.y < 1.6f*0.5 &&
-         position.y - position.x < 1.6f*0.5;
+  return position.x > -0.8f*0.8 && position.x < 0.8f*0.8 && position.y > -1.0f*0.8 &&
+         position.y < 1.0f*0.8 && position.x + position.y < 1.6f*0.8 &&
+         position.y - position.x < 1.6f*0.8;
 }
 
 const char *Grain::UnitName() const {
