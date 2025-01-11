@@ -1,4 +1,4 @@
-#include "tiny_tank.h"
+#include "grain.h"
 
 #include "battle_game/core/bullets/bullets.h"
 #include "battle_game/core/game_core.h"
@@ -80,7 +80,7 @@ void Grain::Render() {
 }
 
 void Grain::Update() {
-  TankMove(3.0f, glm::radians(180.0f));
+  GrainMove(3.0f, glm::radians(180.0f));
   TurretRotate();
   Fire();
 }
@@ -138,32 +138,35 @@ void Grain::Fire() {
       if (input_data.mouse_button_down[GLFW_MOUSE_BUTTON_LEFT]) {
         auto velocity = Rotate(glm::vec2{0.0f, 20.0f}, turret_rotation_);
         float damage_scale = GetDamageScale() * 0.8f;
-        if (GameCore::RandomFloat() < 0.2f) {
+        if (game_core_->RandomFloat() < 0.2f) {
           damage_scale *= 2.0f;
         }
         GenerateBullet<bullet::CannonBall>(
             position_ + Rotate({0.0f, 1.2f}, turret_rotation_),
             turret_rotation_, GetDamageScale(), velocity);
-        if (GetHealth() < 0.4f){
-            fire_count_down_ = kTickPerSecond * 0.5f;//when health_<0.4f, fire interval 2 seconds
+        if (GetHealth() < 0.4f) {
+          fire_count_down_ =
+              kTickPerSecond *
+              0.5f;  // when health_<0.4f, fire interval 2 seconds
+        } else {
+          fire_count_down_ = kTickPerSecond;  // Fire interval 1 second.
         }
-        else{
-            fire_count_down_ = kTickPerSecond; // Fire interval 1 second.
       }
     }
   }
   if (fire_count_down_) {
-    fire_count_down_--;
+     fire_count_down_--;
   }
-}
+ }
+
 
 void Grain::Fix() {
     if (BasicMaxHealth() - GetHealth() < 1.0f) {
-        SetHealth(GetHealth()*1.1f);
-    } 
+        SetHealth(GetHealth() * 1.1f);
+    }
 }
 
-float GetSpeedScale() const {
+float Grain::GetSpeedScale() const {
     return 1.5f;
 }
 bool Grain::IsHit(glm::vec2 position) const {
