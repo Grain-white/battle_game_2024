@@ -14,12 +14,13 @@ class Grain : public Unit {
   void TurretRotate();
   void Fire();
   void Fix();//to fix the tank: increase health by 10%
-
+  void Recover();
   [[nodiscard]] const char *UnitName() const override;
   [[nodiscard]] const char *Author() const override;
 
   float turret_rotation_{0.0f};
   uint32_t fire_count_down_{0};
   uint32_t mine_count_down_{0};
+  int update_count_{0};
 };
 }  // namespace battle_game::unit

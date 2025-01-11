@@ -84,6 +84,7 @@ void Grain::Update() {
   TurretRotate();
   Fire();
   Fix();
+  Recover();
 }
 
 void Grain::GrainMove(float move_speed, float rotate_angular_speed) {
@@ -166,6 +167,12 @@ void Grain::Fix() {
        game_core_->RandomFloat() < 0.3f) {
         SetHealth(GetHealth() * 1.1f);
     }
+}
+void Grain::Recover() {
+  update_count_++;
+  if (update_count_ % 10 == 0) {
+    SetHealth(GetHealth()+ 0.01f);
+  }
 }
 
 float Grain::GetSpeedScale() const {
