@@ -83,6 +83,7 @@ void Grain::Update() {
   GrainMove(3.0f, glm::radians(180.0f));
   TurretRotate();
   Fire();
+  Fix();
 }
 
 void Grain::GrainMove(float move_speed, float rotate_angular_speed) {
