@@ -1,5 +1,5 @@
 #include "grain.h"
-
+#include "battle_game/core/particles/particles.h"
 #include "battle_game/core/bullets/bullets.h"
 #include "battle_game/core/game_core.h"
 #include "battle_game/graphics/graphics.h"
@@ -68,6 +68,7 @@ Grain::Grain(GameCore *game_core, uint32_t id, uint32_t player_id)
           mgr->RegisterModel(turret_vertices, turret_indices);
     }
   }
+  
 }
 
 void Grain::Render() {
@@ -169,10 +170,13 @@ void Grain::Fix() {
     }
 }
 void Grain::Recover() {
-  update_count_++;
-  if (update_count_ % 10 == 0) {
-    SetHealth(GetHealth()+ 0.01f);
+  
+  if (update_count_ == 0) {
+    game_core_->PushEventGenerateParticle<particle::Halo>(
+        position_, rotation_, glm::vec2{0.0f, 0.0f}, 1.0f,
+        glm::vec4{0.0f, 0.0f, 1.0f, 1.0f}, 1.5f);
   }
+  update_count_++;
 }
 
 float Grain::GetSpeedScale() const {
