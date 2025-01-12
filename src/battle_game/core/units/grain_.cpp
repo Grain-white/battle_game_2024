@@ -174,7 +174,7 @@ void Grain::Recover() {
   if (update_count_ == 0) {
     game_core_->PushEventGenerateParticle<particle::Halo>(
         position_, rotation_, glm::vec2{0.0f, 0.0f}, 1.0f,
-        glm::vec4{0.0f, 0.0f, 1.0f, 1.0f}, 1.5f);
+        glm::vec4{0.0f, 0.0f, 1.0f, 1.0f}, 1.0f);
   }
   update_count_++;
 }
